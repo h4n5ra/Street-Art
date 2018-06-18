@@ -1,6 +1,5 @@
 from tkinter import *
-from UI import signUI
-import user as u
+from tkinter.filedialog import askopenfilename
 
 class createUI:
 
@@ -21,14 +20,20 @@ class createUI:
         locationLabel = Label(top, text="Location:")
         nameInput = Entry(top)
         locationInput = Entry(top)
+        imageloc = Entry(top)
+        upload = Button(top, text="Upload Image", command=lambda:self.selectImage(imageloc))
         nameLabel.grid(row=0)
         locationLabel.grid(row=1)
         nameInput.grid(row=0, column=1)
         locationInput.grid(row=1, column=1)
-        createbutton = Button(bottom, text="Create, Sign and Send", padx=5,
+        imageloc.grid(row=2, column=1)
+        upload.grid(row=2, column=2)
+        createbutton = Button(bottom, text="Create, Sign and Send",
                               command=lambda: self.user.signArt(
-                                  self.user.createArt(nameInput.get(), locationInput.get(), "No Image"), self.user.showPrivate()
+                                  self.user.createArt(nameInput.get(), locationInput.get(), imageloc.get()), self.user.showPrivate()
                               ))
-        # signButton = Button(bottom, text="Sign/Send", padx=5)
         createbutton.pack()
-        # signButton.pack()
+
+    def selectImage(self, entry):
+        imageInput = askopenfilename()
+        entry.insert(0, imageInput)

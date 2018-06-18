@@ -1,5 +1,6 @@
 from bigchaindb_driver import BigchainDB
 from bigchaindb_driver.crypto import generate_keypair
+import ipfsapi
 tokens = {}
 tokens['app_id'] = '1268e9e0'
 tokens['app_key'] = '391792356eb3274447255fe097527f29'
@@ -10,6 +11,7 @@ class user:
     def __init__(self, _username):
         self.keys = generate_keypair() # generates a public and private pair
         self.username = _username # sets username of the user
+        self.api = ipfsapi.connect("127.0.0.1", 5001)
 
     def showPublic(self):
         return self.keys.public_key #returns the public key for a user which is their unique ID
@@ -20,13 +22,13 @@ class user:
     def getUsername(self):
         return self.username
 
-    def createArt(self, name, location, imageHash): #creates an asset which represents a piece of art
+    def createArt(self, name, location, image): #creates an asset which represents a piece of art
         # creates storage of information about an art piece in a JSON format
         art = {
             'data' : {
                 'name' : name,
                 'location' : location,
-                'image' : imageHash #hash of the image from IPFS - needs work
+                'image hash' : self.api.add(image)["Hash"]
             }
         }
 
