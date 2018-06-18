@@ -24,21 +24,24 @@ class searchUI:
     def showResultsFancy(self, search, bottom):
         results = q.queries.searchtag(search)
         for r in results:
-            frame = Frame(bottom)
-            namelabel = Label(frame, text="Name: ")
-            locationlabel = Label(frame, text="Location: ")
-            name = Entry(frame)
-            location = Entry(frame)
-            name.insert(0, r["data"]["name"])
-            location.insert(0, r["data"]["location"])
-            #photo = PhotoImage(file=self.getImage(r)+".png")
-            #imagelabel = Label(frame, image=photo)
-            namelabel.grid(row=0, column=0)
-            name.grid(row=0, column=1)
-            locationlabel.grid(row=1, column=0)
-            location.grid(row=1, column=1)
-            #imagelabel.pack()
-            frame.pack()
+            try:
+                frame = Frame(bottom, pady=10)
+                namelabel = Label(frame, text="Name: ")
+                locationlabel = Label(frame, text="Location: ")
+                name = Entry(frame)
+                location = Entry(frame)
+                name.insert(0, r["data"]["name"])
+                location.insert(0, r["data"]["location"])
+                #photo = PhotoImage(file=self.getImage(r)+".png")
+                #imagelabel = Label(frame, image=photo)
+                namelabel.grid(row=0, column=0)
+                name.grid(row=0, column=1)
+                locationlabel.grid(row=1, column=0)
+                location.grid(row=1, column=1)
+                #imagelabel.pack()
+                frame.pack()
+            except:
+                None
 
     def getImage(self, result):
         self.api.get(result["data"]["image hash"])
